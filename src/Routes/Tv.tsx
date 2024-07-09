@@ -148,7 +148,7 @@ const MovingIcon = styled.div`
   margin: 0 20px;
   font-size: 60px;
   cursor: pointer;
-  z-index: 99;
+  z-index: 90;
   &:last-child {
     right: 0;
   }
@@ -162,6 +162,7 @@ const Overlay = styled(motion.div)`
   top: 0;
   width: 100%;
   height: 100%;
+  z-index: 98;
 `;
 
 const BigTV = styled(motion.div)`
@@ -173,6 +174,7 @@ const BigTV = styled(motion.div)`
   right: 0;
   margin: 0 auto;
   border-radius: 20px;
+  z-index: 99;
 `;
 
 const BigTVCover = styled.div<{ $bgPhoto: string }>`

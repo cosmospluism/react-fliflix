@@ -22,6 +22,7 @@ const Nav = styled(motion.nav)`
   align-items: center;
   padding: 25px 40px;
   box-sizing: border-box;
+  z-index: 100;
 `;
 
 const Box = styled.div`

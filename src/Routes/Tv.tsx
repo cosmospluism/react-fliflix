@@ -190,6 +190,7 @@ const BigTVCover = styled.div<{ $bgPhoto: string }>`
     color: ${(props) => props.theme.white.lighter};
     font-size: 20px;
     margin: 20px 25px;
+    cursor: pointer;
     &:first-child {
       font-size: 25px;
     }
@@ -231,7 +232,7 @@ const BigTVInfo = styled.div`
   div {
     display: flex;
     flex-direction: column;
-    margin: 10px 0;
+    margin: 20px 0;
     button {
       border: none;
       border-radius: 5px;

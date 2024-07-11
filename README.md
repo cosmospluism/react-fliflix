@@ -1,4 +1,4 @@
-## FLiFLIX using ReactJS & Typescript
+## FLiFLIX using Typescript
 
 ![FLiFLIX video](https://github.com/cosmospluism/react-fliflix/assets/135795502/88dadd1b-d1ed-4958-afcd-1f433d6f3bba)
 

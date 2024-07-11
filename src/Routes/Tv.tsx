@@ -311,6 +311,25 @@ function Tv() {
     queryFn: getTVPopular,
   });
 
+  // add newLayoutId
+  const tvLayoutId = (tvId: number) => `tv${tvId}`;
+  const topTVLayoutId = (tvId: number) => `ttv${tvId}`;
+  const popularTVLayoutId = (tvId: number) => `ptv${tvId}`;
+
+  const tvWithLayoutId = data?.results.map((tv) => ({
+    ...tv,
+    newLayoutId: tvLayoutId(tv.id),
+  }));
+  const topTVWithLayoutId = topRatedTV?.results.map((tv) => ({
+    ...tv,
+    newLayoutId: topTVLayoutId(tv.id),
+  }));
+  const popularTVWithLayoutId = popularTV?.results.map((tv) => ({
+    ...tv,
+    newLayoutId: popularTVLayoutId(tv.id),
+  }));
+
+  // tvGenre
   const { data: tvGenre } = useQuery<IGenre>({
     queryKey: ["TV", "Genre"],
     queryFn: getTVGenre,
@@ -402,30 +421,25 @@ function Tv() {
 
   // useNavigate
   const navigate = useNavigate();
-  const handleClickedTV = (id: number) => {
+  const handleClickedTV = (id: string) => {
     navigate(`/tv/${id}`);
   };
   const tvMatch = useMatch("/tv/:tvId");
 
   const clickedTV =
     tvMatch?.params.tvId &&
-    data?.results.find((tv) => tv.id + "" === tvMatch.params.tvId);
+    tvWithLayoutId?.find((tv) => tv.newLayoutId === tvMatch.params.tvId);
 
   const clickedTopTV =
     tvMatch?.params.tvId &&
-    topRatedTV?.results.find((tv) => tv.id + "" === tvMatch.params.tvId);
+    topTVWithLayoutId?.find((tv) => tv.newLayoutId === tvMatch.params.tvId);
 
   const clickedPopularTV =
     tvMatch?.params.tvId &&
-    popularTV?.results.find((tv) => tv.id + "" === tvMatch.params.tvId);
-
-  // [data, topRatedTV, popularTV]
-  // .map((tv) => tv?.results)
-  // .find((item) => item?.map((tv) => tv.id + "" === tvMatch?.params.tvId))
-  // ?.find((item) => item.id + "" === tvMatch?.params.tvId);
+    popularTVWithLayoutId?.find((tv) => tv.newLayoutId === tvMatch.params.tvId);
 
   const handleBacktoTVPage = () => {
-    navigate("/tv");
+    navigate(-1);
   };
 
   return (
@@ -469,8 +483,8 @@ function Tv() {
                   transition={{ type: "tween", duration: 1 }}
                   key={sliderIndex}
                 >
-                  {data?.results
-                    .slice(1)
+                  {tvWithLayoutId
+                    ?.slice(1)
                     .slice(offset * sliderIndex, offset * sliderIndex + offset)
                     .map((tv) => (
                       <SliderBox
@@ -480,8 +494,8 @@ function Tv() {
                         initial="initial"
                         whileHover="hover"
                         transition={{ type: "tween" }}
-                        onClick={() => handleClickedTV(tv.id)}
-                        layoutId={tv.id + ""}
+                        onClick={() => handleClickedTV(tv.newLayoutId)}
+                        layoutId={tv.newLayoutId}
                       >
                         <BoxInfo variants={boxInfoVariants}>
                           <h3>{tv.name}</h3>
@@ -519,8 +533,8 @@ function Tv() {
                   exit="exit"
                   transition={{ type: "tween", duration: 1 }}
                 >
-                  {topRatedTV?.results
-                    .slice(
+                  {topTVWithLayoutId
+                    ?.slice(
                       offset * sliderIndex1,
                       offset * sliderIndex1 + offset
                     )
@@ -532,8 +546,8 @@ function Tv() {
                         initial="initial"
                         whileHover="hover"
                         transition={{ type: "tween" }}
-                        onClick={() => handleClickedTV(tv.id)}
-                        layoutId={tv.id + ""}
+                        onClick={() => handleClickedTV(tv.newLayoutId)}
+                        layoutId={tv.newLayoutId}
                       >
                         <BoxInfo variants={boxInfoVariants}>
                           <h3>{tv.name}</h3>
@@ -571,8 +585,8 @@ function Tv() {
                   exit="exit"
                   transition={{ type: "tween", duration: 1 }}
                 >
-                  {popularTV?.results
-                    .slice(
+                  {popularTVWithLayoutId
+                    ?.slice(
                       offset * sliderIndex2,
                       offset * sliderIndex2 + offset
                     )
@@ -584,8 +598,8 @@ function Tv() {
                         initial="initial"
                         whileHover="hover"
                         transition={{ type: "tween" }}
-                        onClick={() => handleClickedTV(tv.id)}
-                        layoutId={tv.id + ""}
+                        onClick={() => handleClickedTV(tv.newLayoutId)}
+                        layoutId={tv.newLayoutId}
                       >
                         <BoxInfo variants={boxInfoVariants}>
                           <h3>{tv.name}</h3>

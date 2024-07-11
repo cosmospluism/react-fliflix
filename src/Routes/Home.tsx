@@ -326,12 +326,31 @@ function Home() {
     queryFn: getUpcomingMovies,
   });
 
+  // Making unique layoutId based on original movieId
+  const popularMovieLayoutId = (movieId: number) => `pm${movieId}`;
+  const topMovieLayoutId = (movieId: number) => `tm${movieId}`;
+  const upcomingMovieLayoutId = (movieId: number) => `um${movieId}`;
+
+  const popularMovieWithLayoutId = popularMovie?.results.map((movie) => ({
+    ...movie,
+    newLayoutId: popularMovieLayoutId(movie.id),
+  }));
+  const topMovieWithLayoutId = topRatedMovie?.results.map((movie) => ({
+    ...movie,
+    newLayoutId: topMovieLayoutId(movie.id),
+  }));
+  const upcomingMovieWithLayoutId = upcomingMovie?.results.map((movie) => ({
+    ...movie,
+    newLayoutId: upcomingMovieLayoutId(movie.id),
+  }));
+
   // movie genre api
   const { data: movieGenre } = useQuery<IGenre>({
     queryKey: ["Movie", "Genre"],
     queryFn: getMovieGenre,
   });
 
+  // genre id > genre name
   const clickedMovieGenre = (clickedId: number) => {
     return movieGenre?.genres.find((movie) => movie.id === clickedId)?.name;
   };
@@ -349,7 +368,7 @@ function Home() {
       if (isSliderLeaving) return;
       toggleLeaving();
       setBack(false);
-      const totalTV = popularMovie.results.length - 1;
+      const totalTV = popularMovie.results.length;
       const maxIndex = Math.floor(totalTV / offset) - 1;
       setSliderIndex((prev) => (prev === maxIndex ? 0 : prev + 1));
     }
@@ -359,7 +378,7 @@ function Home() {
       if (isSliderLeaving1) return;
       toggleLeaving1();
       setBack1(false);
-      const totalTV = topRatedMovie.results.length - 1;
+      const totalTV = topRatedMovie.results.length;
       const maxIndex = Math.floor(totalTV / offset) - 1;
       setSliderIndex1((prev) => (prev === maxIndex ? 0 : prev + 1));
     }
@@ -369,7 +388,7 @@ function Home() {
       if (isSliderLeaving2) return;
       toggleLeaving2();
       setBack2(false);
-      const totalTV = upcomingMovie.results.length - 1;
+      const totalTV = upcomingMovie.results.length;
       const maxIndex = Math.floor(totalTV / offset) - 1;
       setSliderIndex2((prev) => (prev === maxIndex ? 0 : prev + 1));
     }
@@ -384,7 +403,7 @@ function Home() {
       if (isSliderLeaving) return;
       toggleLeaving();
       setBack(true);
-      const totalTV = popularMovie.results.length - 1;
+      const totalTV = popularMovie.results.length;
       const maxIndex = Math.floor(totalTV / offset) - 1;
       setSliderIndex((prev) => (prev === 0 ? maxIndex : prev - 1));
     }
@@ -394,7 +413,7 @@ function Home() {
       if (isSliderLeaving1) return;
       toggleLeaving1();
       setBack1(true);
-      const totalTV = topRatedMovie.results.length - 1;
+      const totalTV = topRatedMovie.results.length;
       const maxIndex = Math.floor(totalTV / offset) - 1;
       setSliderIndex1((prev) => (prev === 0 ? maxIndex : prev - 1));
     }
@@ -404,7 +423,7 @@ function Home() {
       if (isSliderLeaving2) return;
       toggleLeaving2();
       setBack2(true);
-      const totalTV = upcomingMovie.results.length - 1;
+      const totalTV = upcomingMovie.results.length;
       const maxIndex = Math.floor(totalTV / offset) - 1;
       setSliderIndex2((prev) => (prev === 0 ? maxIndex : prev - 1));
     }
@@ -420,25 +439,26 @@ function Home() {
 
   const handleOverlayClicked = () => navigate(-1);
 
-  const handleClickedMovie = (movieId: number) => {
+  const handleClickedMovie = (movieId: string) => {
     navigate(`/movies/${movieId}`);
   };
 
   const clickedPopularMovies =
     movieMatch?.params.movieId &&
-    popularMovie?.results.find(
-      (movie) => movie.id + "" === movieMatch.params.movieId
+    popularMovieWithLayoutId?.find(
+      (movie) => movie.newLayoutId === movieMatch.params.movieId
     );
 
   const clickedTopRatedMovies =
     movieMatch?.params.movieId &&
-    topRatedMovie?.results.find(
-      (movie) => movie.id + "" === movieMatch.params.movieId
+    topMovieWithLayoutId?.find(
+      (movie) => movie.newLayoutId === movieMatch.params.movieId
     );
+
   const clickedUpcomingMovies =
     movieMatch?.params.movieId &&
-    upcomingMovie?.results.find(
-      (movie) => movie.id + "" === movieMatch.params.movieId
+    upcomingMovieWithLayoutId?.find(
+      (movie) => movie.newLayoutId === movieMatch.params.movieId
     );
 
   return (
@@ -482,22 +502,24 @@ function Home() {
                   transition={{ type: "tween", duration: 1 }}
                   key={sliderIndex}
                 >
-                  {popularMovie?.results
-                    .slice(1)
+                  {popularMovieWithLayoutId
+                    ?.slice(1)
                     .slice(offset * sliderIndex, offset * sliderIndex + offset)
-                    .map((tv) => (
+                    .map((movie) => (
                       <SliderBox
-                        $bgPhoto={imagePath(tv.backdrop_path || tv.poster_path)}
-                        key={tv.id}
+                        $bgPhoto={imagePath(
+                          movie.backdrop_path || movie.poster_path
+                        )}
+                        key={movie.id}
                         variants={sliderBoxVariants}
                         initial="initial"
                         whileHover="hover"
                         transition={{ type: "tween" }}
-                        onClick={() => handleClickedMovie(tv.id)}
-                        layoutId={tv.id + ""}
+                        onClick={() => handleClickedMovie(movie.newLayoutId)}
+                        layoutId={movie.newLayoutId}
                       >
                         <BoxInfo variants={boxInfoVariants}>
-                          <h3>{tv.title}</h3>
+                          <h3>{movie.title}</h3>
                         </BoxInfo>
                       </SliderBox>
                     ))}
@@ -532,24 +554,24 @@ function Home() {
                   exit="exit"
                   transition={{ type: "tween", duration: 1 }}
                 >
-                  {topRatedMovie?.results
-                    .slice(
+                  {topMovieWithLayoutId
+                    ?.slice(
                       offset * sliderIndex1,
                       offset * sliderIndex1 + offset
                     )
-                    .map((tv) => (
+                    .map((movie) => (
                       <SliderBox
-                        $bgPhoto={imagePath(tv.backdrop_path)}
-                        key={tv.id}
+                        $bgPhoto={imagePath(movie.backdrop_path)}
+                        key={movie.id}
                         variants={sliderBoxVariants}
                         initial="initial"
                         whileHover="hover"
                         transition={{ type: "tween" }}
-                        onClick={() => handleClickedMovie(tv.id)}
-                        layoutId={tv.id + ""}
+                        onClick={() => handleClickedMovie(movie.newLayoutId)}
+                        layoutId={movie.newLayoutId}
                       >
                         <BoxInfo variants={boxInfoVariants}>
-                          <h3>{tv.title}</h3>
+                          <h3>{movie.title}</h3>
                         </BoxInfo>
                       </SliderBox>
                     ))}
@@ -584,24 +606,24 @@ function Home() {
                   exit="exit"
                   transition={{ type: "tween", duration: 1 }}
                 >
-                  {upcomingMovie?.results
-                    .slice(
+                  {upcomingMovieWithLayoutId
+                    ?.slice(
                       offset * sliderIndex2,
                       offset * sliderIndex2 + offset
                     )
-                    .map((tv) => (
+                    .map((movie) => (
                       <SliderBox
-                        $bgPhoto={imagePath(tv.backdrop_path)}
-                        key={tv.id}
+                        $bgPhoto={imagePath(movie.backdrop_path)}
+                        key={movie.id}
                         variants={sliderBoxVariants}
                         initial="initial"
                         whileHover="hover"
                         transition={{ type: "tween" }}
-                        onClick={() => handleClickedMovie(tv.id)}
-                        layoutId={tv.id + ""}
+                        onClick={() => handleClickedMovie(movie.newLayoutId)}
+                        layoutId={movie.newLayoutId}
                       >
                         <BoxInfo variants={boxInfoVariants}>
-                          <h3>{tv.title}</h3>
+                          <h3>{movie.title}</h3>
                         </BoxInfo>
                       </SliderBox>
                     ))}

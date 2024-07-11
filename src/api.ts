@@ -8,6 +8,10 @@ interface IMovie {
   poster_path: string;
   title: string;
   overview: string;
+  vote_average: number;
+  vote_count: number;
+  release_date: string;
+  genre_ids: number[];
 }
 
 export interface IGetMovies {
@@ -27,21 +31,9 @@ export function getMovies() {
   );
 }
 
-interface IPopularMovie {
-  id: number;
-  backdrop_path: string;
-  poster_path: string;
-  title: string;
-  overview: string;
-  vote_average: number;
-  vote_count: number;
-  release_date: string;
-  genre_ids: number[];
-}
-
 export interface IGetPopularMovies {
   page: number;
-  results: IPopularMovie[];
+  results: IMovie[];
   total_pages: number;
   total_results: number;
 }

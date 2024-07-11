@@ -11,6 +11,7 @@ import {
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import NoSearchResult from "./NoSearchResult";
+import noMovieImg from "../img/no_movie.png";
 
 const Container = styled.div``;
 
@@ -79,6 +80,22 @@ const Box = styled(motion.div)<{ $bgPhoto: string }>`
   border-radius: 5px;
 `;
 
+const NoMovieImg = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0.5;
+  img {
+    width: 120px;
+  }
+  h4 {
+    color: gray;
+    margin-top: 20px;
+    font-size: 25px;
+  }
+`;
+
 const MovingIcon = styled.div`
   position: absolute;
   top: 250px;
@@ -113,6 +130,7 @@ function Search() {
     queryKey: ["search", "Movie", keyword],
     queryFn: () => getSearchMovie(keyword || ""),
   });
+  console.log(data);
 
   const { data: searchTV, isLoading: searchTVLoading } =
     useQuery<IGetPopularMovies>({
@@ -129,6 +147,7 @@ function Search() {
     if (data) {
       if (leaving) return;
       toggleLeaving();
+      setBack(false);
       const totalMovie = Math.floor(data.results.length / offset);
       const indexMax = totalMovie - 1;
       setSliderIndex((prev) => (prev === indexMax ? 0 : prev + 1));
@@ -138,6 +157,7 @@ function Search() {
     if (searchTV) {
       if (leaving1) return;
       toggleLeaving1();
+      setBack1(false);
       const totalMovie = Math.floor(searchTV.results.length / offset);
       const indexMax = totalMovie - 1;
       setSliderIndex1((prev) => (prev === indexMax ? 0 : prev + 1));
@@ -209,12 +229,19 @@ function Search() {
                         sliderIndex * offset,
                         sliderIndex * offset + offset
                       )
-                      .map((movie) => (
-                        <Box
-                          key={movie.id}
-                          $bgPhoto={imagePath(movie.poster_path || "")}
-                        />
-                      ))}
+                      .map((movie) =>
+                        movie.poster_path ? (
+                          <Box
+                            key={movie.id}
+                            $bgPhoto={imagePath(movie.poster_path || "")}
+                          />
+                        ) : (
+                          <NoMovieImg>
+                            <img src={noMovieImg} />
+                            <h4>No Poster</h4>
+                          </NoMovieImg>
+                        )
+                      )}
                   </Slider>
                   <MovingIcon>
                     <FontAwesomeIcon
@@ -253,12 +280,19 @@ function Search() {
                         sliderIndex1 * offset,
                         sliderIndex1 * offset + offset
                       )
-                      .map((movie) => (
-                        <Box
-                          key={movie.id}
-                          $bgPhoto={imagePath(movie.poster_path || "")}
-                        />
-                      ))}
+                      .map((tv) =>
+                        tv.poster_path ? (
+                          <Box
+                            key={tv.id}
+                            $bgPhoto={imagePath(tv.poster_path || "")}
+                          />
+                        ) : (
+                          <NoMovieImg>
+                            <img src={noMovieImg} />
+                            <h4>No Poster</h4>
+                          </NoMovieImg>
+                        )
+                      )}
                   </Slider>
                   <MovingIcon1>
                     <FontAwesomeIcon

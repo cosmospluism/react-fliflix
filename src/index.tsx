@@ -57,6 +57,7 @@ body {
 	position: relative;
 	width: 100vw;
 	height: 200vh;
+	font-family: "Karla", sans-serif;
 	background-color: black;
 	color: ${(props) => props.theme.white.darker};
 	&::-webkit-scrollbar {

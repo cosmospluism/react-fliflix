@@ -262,6 +262,7 @@ const BigTVInfo = styled.div`
       margin-bottom: 5px;
       font-size: 15px;
       font-weight: 600;
+      color: black;
       cursor: pointer;
       transition: all 0.3s;
       svg {

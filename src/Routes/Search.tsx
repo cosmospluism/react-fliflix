@@ -93,6 +93,7 @@ const NoMovieImg = styled.div`
     color: gray;
     margin-top: 20px;
     font-size: 25px;
+    font-weight: 600;
   }
 `;
 
@@ -237,7 +238,7 @@ function Search() {
                           />
                         ) : (
                           <NoMovieImg>
-                            <img src={noMovieImg} />
+                            <img src={noMovieImg} alt="no_movie" />
                             <h4>No Poster</h4>
                           </NoMovieImg>
                         )
@@ -288,7 +289,7 @@ function Search() {
                           />
                         ) : (
                           <NoMovieImg>
-                            <img src={noMovieImg} />
+                            <img src={noMovieImg} alt="no_movie" />
                             <h4>No Poster</h4>
                           </NoMovieImg>
                         )

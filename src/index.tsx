@@ -79,8 +79,8 @@ root.render(
   <RecoilRoot>
     <QueryClientProvider client={client}>
       <ThemeProvider theme={theme}>
-        <App />
         <GlobalStyle />
+        <App />
       </ThemeProvider>
     </QueryClientProvider>
   </RecoilRoot>

@@ -1,12 +1,12 @@
 {
   "files": {
-    "main.js": "/react-fliflix/static/js/main.6514ba04.js",
+    "main.js": "/react-fliflix/static/js/main.7e364ca7.js",
     "static/media/no_found.png": "/react-fliflix/static/media/no_found.293f969cd753564e357f.png",
     "static/media/profile.webp": "/react-fliflix/static/media/profile.d89b05451cbf91352a04.webp",
     "index.html": "/react-fliflix/index.html",
-    "main.6514ba04.js.map": "/react-fliflix/static/js/main.6514ba04.js.map"
+    "main.7e364ca7.js.map": "/react-fliflix/static/js/main.7e364ca7.js.map"
   },
   "entrypoints": [
-    "static/js/main.6514ba04.js"
+    "static/js/main.7e364ca7.js"
   ]
 }

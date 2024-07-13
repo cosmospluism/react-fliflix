@@ -94,6 +94,7 @@ const Buttons = styled.div`
     font-size: 20px;
     padding: 10px 13px;
     margin-right: 15px;
+    color: black;
     cursor: pointer;
     transition: all 0.3s;
     &:last-child {

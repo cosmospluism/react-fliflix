@@ -708,8 +708,8 @@ function Home() {
                         </div>
                         <BigTVOverview>
                           {clickedPopularMovies.overview
-                            ? clickedPopularMovies.overview.length > 380
-                              ? clickedPopularMovies.overview.slice(1, 380) +
+                            ? clickedPopularMovies.overview.length > 300
+                              ? clickedPopularMovies.overview.slice(1, 300) +
                                 "..."
                               : clickedPopularMovies.overview
                             : "No overview"}
@@ -774,8 +774,8 @@ function Home() {
                         </div>
                         <BigTVOverview>
                           {clickedTopRatedMovies.overview
-                            ? clickedTopRatedMovies.overview.length > 380
-                              ? clickedTopRatedMovies.overview.slice(1, 380) +
+                            ? clickedTopRatedMovies.overview.length > 300
+                              ? clickedTopRatedMovies.overview.slice(1, 300) +
                                 "..."
                               : clickedTopRatedMovies.overview
                             : "No overview"}
@@ -840,8 +840,8 @@ function Home() {
                         </div>
                         <BigTVOverview>
                           {clickedUpcomingMovies.overview
-                            ? clickedUpcomingMovies.overview.length > 380
-                              ? clickedUpcomingMovies.overview.slice(1, 380) +
+                            ? clickedUpcomingMovies.overview.length > 300
+                              ? clickedUpcomingMovies.overview.slice(1, 300) +
                                 "..."
                               : clickedUpcomingMovies.overview
                             : "No overview"}

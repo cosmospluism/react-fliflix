@@ -684,8 +684,8 @@ function Tv() {
                         </div>
                         <BigTVOverview>
                           {clickedTV.overview
-                            ? clickedTV.overview.length > 380
-                              ? clickedTV.overview.slice(1, 380) + "..."
+                            ? clickedTV.overview.length > 300
+                              ? clickedTV.overview.slice(1, 300) + "..."
                               : clickedTV.overview
                             : "No overview"}
                         </BigTVOverview>
@@ -744,8 +744,8 @@ function Tv() {
                         </div>
                         <BigTVOverview>
                           {clickedTopTV.overview
-                            ? clickedTopTV.overview.length > 380
-                              ? clickedTopTV.overview.slice(1, 380) + "..."
+                            ? clickedTopTV.overview.length > 300
+                              ? clickedTopTV.overview.slice(1, 300) + "..."
                               : clickedTopTV.overview
                             : "No overview"}
                         </BigTVOverview>
@@ -807,8 +807,8 @@ function Tv() {
                         </div>
                         <BigTVOverview>
                           {clickedPopularTV.overview
-                            ? clickedPopularTV.overview.length > 380
-                              ? clickedPopularTV.overview.slice(1, 380) + "..."
+                            ? clickedPopularTV.overview.length > 300
+                              ? clickedPopularTV.overview.slice(1, 300) + "..."
                               : clickedPopularTV.overview
                             : "No overview"}
                         </BigTVOverview>
